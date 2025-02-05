@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">GoGym</string>
+    <string name="default_web_client_id">484576991718-oj0khtb1fpavcenh3elm58gsetl0o0ap.apps.googleusercontent.com</string>
+        <string-array name="user_types">
+            <item>Weight Loss</item>
+            <item>Weight Gain</item>
+            <item>Muscle Tone</item>
+        </string-array>
+
+</resources>

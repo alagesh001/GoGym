@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "484576991718",
+    "project_id": "gogym-14292",
+    "storage_bucket": "gogym-14292.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:484576991718:android:ab706e158488efec411e27",
+        "android_client_info": {
+          "package_name": "com.oxad.gogym"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "484576991718-vtbjprj1d0c7kpja1n6cpcna3ueuor54.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.oxad.gogym",
+            "certificate_hash": "b11f8e6f651fa0866b7dcbbee530413aab0e0efb"
+          }
+        },
+        {
+          "client_id": "484576991718-oj0khtb1fpavcenh3elm58gsetl0o0ap.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAU4smJZM2HG1fk21mPC1Fk0pxE-rbdaFM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "484576991718-oj0khtb1fpavcenh3elm58gsetl0o0ap.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
