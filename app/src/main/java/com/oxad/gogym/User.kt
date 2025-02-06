@@ -1,6 +1,7 @@
 package com.oxad.gogym
 
 import com.google.gson.JsonElement
+import com.oxad.gogym.model.UserRegisterModel
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.http.Body
@@ -20,13 +21,7 @@ interface ApiService {
     @FormUrlEncoded
     @POST("registerusers.php") // Adjust this to match your backend endpoint
     fun registerUser(@Field("name") name: String,
-                     @Field("email") email: String): Call<ApiResponse>
+                     @Field("email") email: String): Call<UserRegisterModel>
 }
 
 // Response model
-data class ApiResponse(
-    val success: Boolean,
-    val message: String,
-    val isAdmin: Int
-
-)
