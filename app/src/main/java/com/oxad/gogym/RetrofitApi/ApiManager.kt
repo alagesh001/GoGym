@@ -1,12 +1,12 @@
-package com.oxad.gogym
+package com.oxad.gogym.RetrofitApi
 
 import android.content.Context
-import android.content.Intent
 import android.util.Log
 import android.widget.Toast
 import com.google.gson.Gson
-import com.oxad.gogym.Activity.Basicinformation
-import com.oxad.gogym.Constants.Companion.REGISTER_USER
+import com.oxad.gogym.Utils.Constants.Companion.REGISTER_USER
+import com.oxad.gogym.Utils.Constants.Companion.SAVE_USER
+import com.oxad.gogym.Utils.SessionManager
 import com.oxad.gogym.model.UserRegisterModel
 import retrofit2.Call
 import retrofit2.Callback
@@ -28,7 +28,9 @@ private val contextA = context
 
                     if(response.body()!=null) {
                         if (response.body()!!.success) {
-                            sessionManager.saveLogin(profileUrl,name,email)
+                            if(response.body()!!.isAdmin == 0) {
+                                sessionManager.saveLogin(profileUrl, name, email)
+                            }
                             apiInterfaceIs.onSuccess(response.body()!!, REGISTER_USER)
                         } else {
                             apiInterfaceIs.onError(response.body()!!.message)
@@ -43,15 +45,17 @@ private val contextA = context
                 }
             })
     }
-    fun saveUserData( profileUrl:String,name: String, email: String) {
+    fun saveUserData(name: String, email: String,age: Int, gender: String,weight: Int, height: Int,type: Int) {
+        Log.e("checkresponss", "saveUserData: $age $gender $weight $height $type $name $email")
 
-        RetrofitClient.instance.registerUser(name,email)
+        RetrofitClient.instance.saveprofiledata(name,email,age,gender,type,height, weight)
             .enqueue(object : Callback<UserRegisterModel> {
                 override fun onResponse(call: Call<UserRegisterModel>, response: Response<UserRegisterModel>) {
+                    Log.e("checkresponss", "saveUserData: ${response.body()}")
+
                     if(response.body()!=null) {
                         if (response.body()!!.success) {
-                            sessionManager.saveLogin(profileUrl,name,email)
-                            apiInterfaceIs.onSuccess(response.body()!!, REGISTER_USER)
+                            apiInterfaceIs.onSuccess(response.body()!!, SAVE_USER)
                         } else {
                             apiInterfaceIs.onError(response.body()!!.message)
                         }

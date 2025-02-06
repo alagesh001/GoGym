@@ -1,38 +1,26 @@
-package com.oxad.gogym
+package com.oxad.gogym.Activity
 
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import com.google.android.gms.auth.api.identity.GetSignInIntentRequest
-import com.google.android.gms.auth.api.identity.Identity
-import com.google.android.gms.auth.api.identity.SignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
-import com.google.android.gms.common.api.Api
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
-import com.google.android.libraries.identity.googleid.GetGoogleIdOption
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.GoogleAuthProvider
-import com.google.gson.Gson
-import com.google.gson.JsonElement
-import com.oxad.gogym.Activity.Basicinformation
-import com.oxad.gogym.Constants.Companion.REGISTER_USER
+import com.oxad.gogym.Utils.Constants.Companion.REGISTER_USER
+import com.oxad.gogym.R
+import com.oxad.gogym.RetrofitApi.ApiInterface
+import com.oxad.gogym.RetrofitApi.ApiManager
+import com.oxad.gogym.Utils.SessionManager
 import com.oxad.gogym.model.UserRegisterModel
-import okhttp3.ResponseBody
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
-class MainActivity : AppCompatActivity(),ApiInterface {
+class MainActivity : AppCompatActivity(), ApiInterface {
     private lateinit var auth: FirebaseAuth
     private lateinit var googleSignInClient: GoogleSignInClient
     private lateinit var sessionManager: SessionManager

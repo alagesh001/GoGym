@@ -1,4 +1,4 @@
-package com.oxad.gogym
+package com.oxad.gogym.Utils
 
 import android.content.Context
 import android.content.SharedPreferences

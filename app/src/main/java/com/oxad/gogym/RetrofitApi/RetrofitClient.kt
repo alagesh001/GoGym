@@ -1,4 +1,4 @@
-package com.oxad.gogym
+package com.oxad.gogym.RetrofitApi
 
 import com.google.gson.GsonBuilder
 
