@@ -1,11 +1,25 @@
 package com.oxad.gogym.fragment
 
+import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
+import android.widget.Spinner
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.oxad.gogym.R
+import com.oxad.gogym.activity.Login
+import com.oxad.gogym.databinding.FragmentHomeBinding
+import com.oxad.gogym.databinding.FragmentProfileBinding
+import com.oxad.gogym.utils.SessionManager
+import com.oxad.gogym.utils.SharedPrefHelper
+import com.oxad.gogym.utils.SpConstants
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -17,10 +31,12 @@ private const val ARG_PARAM2 = "param2"
  * Use the [ProfileFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class ProfileFragment : Fragment() {
+class ProfileFragment : Fragment(), View.OnClickListener {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
+    private lateinit var binding: FragmentProfileBinding
+    private lateinit var sessionManager: SessionManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,11 +49,65 @@ class ProfileFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_profile, container, false)
-    }
+        binding = FragmentProfileBinding.inflate(inflater, container, false)
+        sessionManager = SessionManager(requireActivity())
+        initUi()
+        return binding.root
 
+    }
+    private fun String.toEditable(): Editable =  Editable.Factory.getInstance().newEditable(this)
+    private fun initUi(){
+        setclicklistener()
+        if(activity!=null) {
+            val ageSpinner: Spinner = binding.spinnerTypeAge
+            val ageList = (10..90).map { it.toString() }
+            val adapter = ArrayAdapter(requireActivity(), android.R.layout.simple_spinner_item, ageList)
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            ageSpinner.adapter = adapter
+            binding.etHeight.text =
+                SharedPrefHelper.getFloat(requireActivity(), SpConstants.HEIGHT_DATA).toString().toEditable()
+            binding.etWeight.text =
+                SharedPrefHelper.getFloat(requireActivity(), SpConstants.WEIGHT_DATA).toString().toEditable()
+            binding.etName.text =
+                sessionManager.getUserName().toString().toEditable()
+            binding.etEmail.text =
+                sessionManager.getUserEmail().toString()
+            binding.spinnerType.setSelection( (SharedPrefHelper.getInt(requireActivity(), SpConstants.TYPE_DATA)-1))
+            binding.spinnerTypeAge.setSelection( adapter.getPosition(SharedPrefHelper.getInt(requireActivity(), SpConstants.AGE_DATA)
+                .toString()))
+            val genderarray= resources.getStringArray(R.array.gender_types)
+            binding.spinnerTypeGender.setSelection( genderarray.indexOf(SharedPrefHelper.getString(requireActivity(), SpConstants.GENDER_DATA)))
+
+        }
+
+        // Set new gsetclicklistener()radient colors
+
+    }
+    private fun setclicklistener(){
+        binding.logoutTv.setOnClickListener(this)
+        binding.btnSubmit.setOnClickListener(this)
+    }
+    override fun onClick(p0: View?) {
+        when(p0) {
+            binding.logoutTv -> logout()
+        }
+    }
+    private lateinit var googleSignInClient: GoogleSignInClient
+
+    private fun logout(){
+        Log.e("CheckClick","yes logout clicked")
+        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestEmail()  // Request email if needed
+            .build()
+        googleSignInClient = GoogleSignIn.getClient(requireActivity(), gso)
+        sessionManager.logout()
+        googleSignInClient.signOut()
+        val intent = Intent(requireActivity(), Login::class.java)
+        startActivity(intent)
+        requireActivity().finish()
+    }
     companion object {
         /**
          * Use this factory method to create a new instance of

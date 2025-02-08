@@ -24,7 +24,9 @@ object SharedPrefHelper {
     fun getString(context: Context, key: String, defaultValue: String = ""): String {
         return context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE).getString(key, defaultValue) ?: defaultValue
     }
-
+    fun getFloat(context: Context, key: String, defaultValue: Float = 0f): Float {
+        return context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE).getFloat(key, defaultValue)
+    }
     fun getInt(context: Context, key: String, defaultValue: Int = 0): Int {
         return context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE).getInt(key, defaultValue)
     }

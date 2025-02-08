@@ -98,7 +98,7 @@ android:layout_centerVertical="true"
 
 
             <!-- EditText with Stroke Border -->
-            <EditText
+            <TextView
                 android:id="@+id/et_email"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
@@ -106,7 +106,7 @@ android:layout_centerVertical="true"
                 android:padding="10dp"
                 android:layout_marginTop="8dp"
                 android:textSize="16sp"
-                android:hint="Enter your email"
+                android:textColor="#545454"
                 android:inputType="textEmailAddress"
                 />
             <TextView
@@ -148,6 +148,8 @@ android:layout_centerVertical="true"
                     android:layout_width="140dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="25dp"
+                    android:padding="@dimen/_5sdp"
+
                     android:background="@drawable/custom_spinner"
                     android:entries="@array/user_types" />
             </RelativeLayout>
@@ -170,6 +172,8 @@ android:layout_centerVertical="true"
                     android:layout_width="60dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="25dp"
+                    android:padding="@dimen/_5sdp"
+
                     android:background="@drawable/custom_spinner"
                     android:entries="@array/age_type" />
             </RelativeLayout>
@@ -193,6 +197,7 @@ android:layout_centerVertical="true"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="25dp"
                     android:background="@drawable/custom_spinner"
+                    android:padding="@dimen/_5sdp"
 
                     android:entries="@array/gender_types" />
             </RelativeLayout>
@@ -219,7 +224,7 @@ android:layout_centerVertical="true"
                 android:layout_marginTop="8dp"
                 android:textSize="16sp"
                 android:hint="Enter your height"
-                android:inputType="number"
+                android:inputType="numberDecimal"
                 />
             <TextView
                 android:layout_width="wrap_content"
@@ -254,7 +259,7 @@ android:layout_centerVertical="true"
                 android:layout_marginTop="8dp"
                 android:textSize="16sp"
                 android:hint="Enter your weight"
-                android:inputType="number"
+                android:inputType="numberDecimal"
                 />
             <TextView
                 android:layout_width="wrap_content"

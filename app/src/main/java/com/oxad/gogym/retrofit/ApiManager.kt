@@ -28,9 +28,7 @@ private val contextA = context
 
                     if(response.body()!=null) {
                         if (response.body()!!.success) {
-                            if(response.body()!!.isAdmin == 0) {
                                 sessionManager.saveLogin(profileUrl, name, email)
-                            }
                             apiInterfaceIs.onSuccess(response.body()!!, REGISTER_USER)
                         } else {
                             apiInterfaceIs.onError(response.body()!!.message)
@@ -45,7 +43,7 @@ private val contextA = context
                 }
             })
     }
-    fun saveUserData(name: String, email: String,age: Int, gender: String,weight: Int, height: Int,type: Int) {
+    fun saveUserData(name: String, email: String,age: Int, gender: String,weight: Double, height: Double,type: Int) {
         Log.e("checkresponss", "saveUserData: $age $gender $weight $height $type $name $email")
 
         RetrofitClient.instance.saveprofiledata(name,email,age,gender,type,height, weight)
@@ -55,6 +53,7 @@ private val contextA = context
 
                     if(response.body()!=null) {
                         if (response.body()!!.success) {
+                            sessionManager.setUserName(name)
                             apiInterfaceIs.onSuccess(response.body()!!, SAVE_USER)
                         } else {
                             apiInterfaceIs.onError(response.body()!!.message)

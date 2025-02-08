@@ -22,8 +22,8 @@ interface ApiService {
                         @Field("age") age: Int,
                         @Field("gender") gender: String,
                         @Field("type") type: Int,
-                        @Field("height") height: Int,
-                        @Field("weight") weight: Int,): Call<UserRegisterModel>
+                        @Field("height") height: Double,
+                        @Field("weight") weight: Double,): Call<UserRegisterModel>
 }
 
 // Response model

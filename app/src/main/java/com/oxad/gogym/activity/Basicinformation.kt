@@ -33,8 +33,8 @@ class Basicinformation : AppCompatActivity(), View.OnClickListener, ApiInterface
     private var email: String = ""
     private var age: Int = 0
     private var gender: String = "male"
-    private var height: Int = 0
-    private var weight: Int = 0
+    private var height: Double = 0.00
+    private var weight: Double = 0.00
     private var type: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -50,7 +50,7 @@ class Basicinformation : AppCompatActivity(), View.OnClickListener, ApiInterface
     }
    private fun initUI() {
         binding.etName.text = sessionManager.getUserName().toString().toEditable()
-        binding.etEmail.text = sessionManager.getUserEmail().toString().toEditable()
+        binding.etEmail.text = sessionManager.getUserEmail().toString()
        Log.e("CheckClick","yes pic fetch ${sessionManager.getUserPic()}")
        val ageSpinner: Spinner = findViewById(R.id.spinner_type_age)
 
@@ -90,14 +90,14 @@ class Basicinformation : AppCompatActivity(), View.OnClickListener, ApiInterface
                     0
                 }*/
                 height = if(binding.etHeight.text.toString()!=""){
-                    binding.etHeight.text.toString().toInt()
+                    binding.etHeight.text.toString().toDouble()
                 }else{
-                    0
+                    0.00
                 }
                 weight =if(binding.etWeight.text.toString()!=""){
-                    binding.etWeight.text.toString().toInt()
+                    binding.etWeight.text.toString().toDouble()
                 }else{
-                    0
+                    0.00
                 }
                /* age = if(binding.etHeight.text.toString()!=""){
                     binding.etHeight.text.toString().toInt()
@@ -137,6 +137,11 @@ class Basicinformation : AppCompatActivity(), View.OnClickListener, ApiInterface
 
                 Toast.makeText(this, userRegisterModel.message, Toast.LENGTH_SHORT).show()
                 SharedPrefHelper.save(this, SpConstants.DATA_SAVED,true)
+                SharedPrefHelper.save(this, SpConstants.AGE_DATA,age)
+                SharedPrefHelper.save(this, SpConstants.TYPE_DATA,type)
+                SharedPrefHelper.save(this, SpConstants.GENDER_DATA,gender)
+                SharedPrefHelper.save(this, SpConstants.HEIGHT_DATA,height.toFloat())
+                SharedPrefHelper.save(this, SpConstants.WEIGHT_DATA,weight.toFloat())
                 val intent = Intent(this, MainActivity::class.java)
                 startActivity(intent)
                 finish()

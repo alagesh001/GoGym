@@ -1,5 +1,6 @@
 package com.oxad.gogym.fragment
 
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
@@ -9,6 +10,9 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.oxad.gogym.R
+import com.oxad.gogym.activity.GoalTracker
+import com.oxad.gogym.activity.MainActivity
+import com.oxad.gogym.activity.Trainer
 import com.oxad.gogym.databinding.FragmentHomeBinding
 
 private const val ARG_PARAM1 = "param1"
@@ -18,7 +22,7 @@ private const val ARG_PARAM2 = "param2"
  * Use the [HomeFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class HomeFragment : Fragment() {
+class HomeFragment : Fragment(), View.OnClickListener  {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
@@ -43,10 +47,41 @@ class HomeFragment : Fragment() {
 
     }
 private fun initUi(){
-
+setclicklistener()
     // Set new gradient colors
 
 }
+    private fun setclicklistener(){
+        binding.mytrainerRl.setOnClickListener(this)
+        binding.myworkoutRl.setOnClickListener(this)
+        binding.myoffersRl.setOnClickListener(this)
+        binding.complaintRl.setOnClickListener(this)
+        binding.goaltrackRl.setOnClickListener(this)
+
+    }
+    override fun onClick(p0: View?) {
+        var code = 1
+        when(p0) {
+            binding.goaltrackRl -> code = 1
+            binding.mytrainerRl -> code = 2
+
+        }
+        openActivity(code)
+    }
+    lateinit var intentOpen:Intent
+
+    private fun openActivity(code:Int){
+
+        when(code)
+        {
+            1 -> intentOpen = Intent(requireActivity(), GoalTracker::class.java)
+            2-> intentOpen = Intent(requireActivity(), Trainer::class.java)
+        }
+        if (this::intentOpen.isInitialized) {
+            startActivity(intentOpen)
+        }
+
+    }
     companion object {
 
         @JvmStatic

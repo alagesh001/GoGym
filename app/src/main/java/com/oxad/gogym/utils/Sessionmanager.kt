@@ -41,6 +41,10 @@ class SessionManager(context: Context) {
     fun getUserPic(): String? {
         return sharedPreferences.getString(KEY_USER_PIC, "")
     }
+    fun setUserName(nameIs:String) {
+        editor.putString(KEY_USER_NAME, nameIs)
+        editor.apply()
+    }
     fun getUserName(): String? {
         return sharedPreferences.getString(KEY_USER_NAME, "")
     }
