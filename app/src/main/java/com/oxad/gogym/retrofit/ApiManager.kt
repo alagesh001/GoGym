@@ -1,12 +1,12 @@
-package com.oxad.gogym.RetrofitApi
+package com.oxad.gogym.retrofit
 
 import android.content.Context
 import android.util.Log
 import android.widget.Toast
 import com.google.gson.Gson
-import com.oxad.gogym.Utils.Constants.Companion.REGISTER_USER
-import com.oxad.gogym.Utils.Constants.Companion.SAVE_USER
-import com.oxad.gogym.Utils.SessionManager
+import com.oxad.gogym.utils.RsConstants.Companion.REGISTER_USER
+import com.oxad.gogym.utils.RsConstants.Companion.SAVE_USER
+import com.oxad.gogym.utils.SessionManager
 import com.oxad.gogym.model.UserRegisterModel
 import retrofit2.Call
 import retrofit2.Callback

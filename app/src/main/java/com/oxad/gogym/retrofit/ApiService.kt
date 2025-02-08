@@ -1,4 +1,4 @@
-package com.oxad.gogym.RetrofitApi
+package com.oxad.gogym.retrofit
 
 import com.oxad.gogym.model.UserRegisterModel
 import retrofit2.Call

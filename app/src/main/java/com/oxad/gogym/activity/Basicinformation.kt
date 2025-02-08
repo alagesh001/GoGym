@@ -1,24 +1,28 @@
-package com.oxad.gogym.Activity
+package com.oxad.gogym.activity
 
 import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.util.Log
 import android.view.View
-import android.widget.RadioButton
+import android.widget.ArrayAdapter
+import android.widget.Spinner
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
-import com.oxad.gogym.RetrofitApi.ApiInterface
-import com.oxad.gogym.RetrofitApi.ApiManager
 import com.oxad.gogym.R
-import com.oxad.gogym.Utils.Constants
-import com.oxad.gogym.Utils.SessionManager
 import com.oxad.gogym.databinding.ActivityBasicinformationBinding
 import com.oxad.gogym.model.UserRegisterModel
+import com.oxad.gogym.retrofit.ApiInterface
+import com.oxad.gogym.retrofit.ApiManager
+import com.oxad.gogym.utils.RsConstants
+import com.oxad.gogym.utils.SessionManager
+import com.oxad.gogym.utils.SharedPrefHelper
+import com.oxad.gogym.utils.SpConstants
+
 
 class Basicinformation : AppCompatActivity(), View.OnClickListener, ApiInterface {
     private lateinit var binding: ActivityBasicinformationBinding
@@ -48,7 +52,15 @@ class Basicinformation : AppCompatActivity(), View.OnClickListener, ApiInterface
         binding.etName.text = sessionManager.getUserName().toString().toEditable()
         binding.etEmail.text = sessionManager.getUserEmail().toString().toEditable()
        Log.e("CheckClick","yes pic fetch ${sessionManager.getUserPic()}")
+       val ageSpinner: Spinner = findViewById(R.id.spinner_type_age)
 
+       // Generate list of ages from 10 to 90
+       val ageList = (10..90).map { it.toString() }
+
+       // Set up adapter
+       val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, ageList)
+       adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+       ageSpinner.adapter = adapter
        Glide.with(this)
             .load(sessionManager.getUserPic())
             .placeholder(R.drawable.ic_launcher_foreground) // Default image
@@ -72,11 +84,11 @@ class Basicinformation : AppCompatActivity(), View.OnClickListener, ApiInterface
             binding.btnSubmit ->{
                 name =  binding.etName.text.toString()
                 email = sessionManager.getUserEmail().toString()
-                age =if(binding.etAge.text.toString()!=""){
+               /* age =if(binding.etAge.text.toString()!=""){
                     binding.etAge.text.toString().toInt()
                 }else{
                     0
-                }
+                }*/
                 height = if(binding.etHeight.text.toString()!=""){
                     binding.etHeight.text.toString().toInt()
                 }else{
@@ -87,10 +99,17 @@ class Basicinformation : AppCompatActivity(), View.OnClickListener, ApiInterface
                 }else{
                     0
                 }
+               /* age = if(binding.etHeight.text.toString()!=""){
+                    binding.etHeight.text.toString().toInt()
+                }else{
+                    0
+                }*/
+                 age = binding.spinnerTypeAge.selectedItem.toString().toInt()
                 type = binding.spinnerType.selectedItemPosition  + 1
+                gender = binding.spinnerTypeGender.selectedItem.toString()
 
-                val radioButton = findViewById<RadioButton>(binding.rgGender.checkedRadioButtonId)
-                gender = radioButton.text.toString()
+              /*  val radioButton = findViewById<RadioButton>(binding.rgGender.checkedRadioButtonId)
+                gender = radioButton.text.toString()*/
 
                 apiManager.saveUserData(name,email, age, gender, weight, height, type)
 
@@ -106,7 +125,7 @@ class Basicinformation : AppCompatActivity(), View.OnClickListener, ApiInterface
         googleSignInClient = GoogleSignIn.getClient(this, gso)
         sessionManager.logout()
         googleSignInClient.signOut()
-        val intent = Intent(this@Basicinformation, MainActivity::class.java)
+        val intent = Intent(this@Basicinformation, Login::class.java)
         startActivity(intent)
         finish()
     }
@@ -115,15 +134,19 @@ class Basicinformation : AppCompatActivity(), View.OnClickListener, ApiInterface
 
 
             if(userRegisterModel.success) {
-                Toast.makeText(this, userRegisterModel.message, Toast.LENGTH_SHORT).show()
 
+                Toast.makeText(this, userRegisterModel.message, Toast.LENGTH_SHORT).show()
+                SharedPrefHelper.save(this, SpConstants.DATA_SAVED,true)
+                val intent = Intent(this, MainActivity::class.java)
+                startActivity(intent)
+                finish()
             }
 
 
     }
     override fun onSuccess(response: Any, serviceCode: Int) {
         when(serviceCode){
-            Constants.SAVE_USER -> registerSuccess(response)
+            RsConstants.SAVE_USER -> registerSuccess(response)
         }
     }
 

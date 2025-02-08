@@ -1,4 +1,4 @@
-package com.oxad.gogym.Activity
+package com.oxad.gogym.activity
 
 import android.content.Intent
 import android.os.Bundle
@@ -13,14 +13,16 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
-import com.oxad.gogym.Utils.Constants.Companion.REGISTER_USER
+import com.oxad.gogym.utils.RsConstants.Companion.REGISTER_USER
 import com.oxad.gogym.R
-import com.oxad.gogym.RetrofitApi.ApiInterface
-import com.oxad.gogym.RetrofitApi.ApiManager
-import com.oxad.gogym.Utils.SessionManager
+import com.oxad.gogym.retrofit.ApiInterface
+import com.oxad.gogym.retrofit.ApiManager
+import com.oxad.gogym.utils.SessionManager
 import com.oxad.gogym.model.UserRegisterModel
+import com.oxad.gogym.utils.SharedPrefHelper
+import com.oxad.gogym.utils.SpConstants
 
-class MainActivity : AppCompatActivity(), ApiInterface {
+class Login : AppCompatActivity(), ApiInterface {
     private lateinit var auth: FirebaseAuth
     private lateinit var googleSignInClient: GoogleSignInClient
     private lateinit var sessionManager: SessionManager
@@ -28,15 +30,21 @@ class MainActivity : AppCompatActivity(), ApiInterface {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_login)
         sessionManager = SessionManager(this)
-        apiManager = ApiManager(this@MainActivity,this)
+        apiManager = ApiManager(this@Login,this)
 
         // Initialize Firebase Auth
         if (sessionManager.isLoggedIn()) {
-            val intent = Intent(this@MainActivity,Basicinformation::class.java)
-            startActivity(intent)
-            finish()
+            if(SharedPrefHelper.getBoolean(this,SpConstants.DATA_SAVED)) {
+                val intent = Intent(this@Login, MainActivity::class.java)
+                startActivity(intent)
+                finish()
+            }else{
+                val intent = Intent(this@Login, Basicinformation::class.java)
+                startActivity(intent)
+                finish()
+            }
         }
         auth = FirebaseAuth.getInstance()
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -75,7 +83,7 @@ class MainActivity : AppCompatActivity(), ApiInterface {
             val displayName:String = account?.displayName.toString()
             val profilepic:String = account?.photoUrl.toString()
 
-            Log.w("checkresponss","Yes ${account.idToken} ${account.id} ${ account.photoUrl}}")
+            Log.w("checkresponss","Yes ${account.displayName} ${account.email} ${ account.photoUrl}}")
             apiManager.registerUser(profilepic,displayName, email)
 
         } catch (e: ApiException) {
@@ -88,7 +96,7 @@ class MainActivity : AppCompatActivity(), ApiInterface {
 
         try{
             if(userRegisterModel.isAdmin==1){
-                Toast.makeText(this@MainActivity, "Admin Account", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@Login, "Admin Account", Toast.LENGTH_SHORT).show()
 
             }else{
 
