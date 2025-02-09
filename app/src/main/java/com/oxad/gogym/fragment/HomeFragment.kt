@@ -10,8 +10,11 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.oxad.gogym.R
+import com.oxad.gogym.activity.ComplaintForm
 import com.oxad.gogym.activity.GoalTracker
 import com.oxad.gogym.activity.MainActivity
+import com.oxad.gogym.activity.OfferPage
+import com.oxad.gogym.activity.OurProducts
 import com.oxad.gogym.activity.Trainer
 import com.oxad.gogym.databinding.FragmentHomeBinding
 
@@ -53,7 +56,7 @@ setclicklistener()
 }
     private fun setclicklistener(){
         binding.mytrainerRl.setOnClickListener(this)
-        binding.myworkoutRl.setOnClickListener(this)
+        binding.ourproductsRl.setOnClickListener(this)
         binding.myoffersRl.setOnClickListener(this)
         binding.complaintRl.setOnClickListener(this)
         binding.goaltrackRl.setOnClickListener(this)
@@ -64,6 +67,10 @@ setclicklistener()
         when(p0) {
             binding.goaltrackRl -> code = 1
             binding.mytrainerRl -> code = 2
+            binding.ourproductsRl -> code = 3
+            binding.myoffersRl -> code = 4
+            binding.complaintRl -> code = 5
+
 
         }
         openActivity(code)
@@ -76,6 +83,10 @@ setclicklistener()
         {
             1 -> intentOpen = Intent(requireActivity(), GoalTracker::class.java)
             2-> intentOpen = Intent(requireActivity(), Trainer::class.java)
+            3-> intentOpen = Intent(requireActivity(), OurProducts::class.java)
+            4-> intentOpen = Intent(requireActivity(), OfferPage::class.java)
+            5-> intentOpen = Intent(requireActivity(), ComplaintForm::class.java)
+
         }
         if (this::intentOpen.isInitialized) {
             startActivity(intentOpen)

@@ -83,7 +83,7 @@ android:textColor="@color/black"
 
         </RelativeLayout>
         <RelativeLayout
-            android:id="@+id/myworkout_rl"
+            android:id="@+id/ourproducts_rl"
 
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -100,7 +100,7 @@ android:textColor="@color/black"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textStyle="bold"
-                android:text="My workout and Diet"
+                android:text="Our Products"
                 android:paddingHorizontal="@dimen/_20sdp"
 
                 android:textColor="@color/white"

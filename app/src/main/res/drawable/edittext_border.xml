@@ -4,7 +4,7 @@
 
     <!-- Border Stroke -->
     <stroke android:width="2dp" android:color="#666666" />
-
+<corners android:radius="@dimen/_5sdp"/>
     <!-- Background Color -->
     <solid android:color="#FFFFFF"/>
 
